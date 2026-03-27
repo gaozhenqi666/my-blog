@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ComponentShowcase from '../../components/ComponentShowcase.vue';
+import MyButton from '../../components/ui/MyButton.vue';
+import { Code } from 'astro:components';
+
+const buttonCode = `<template>
+  <div class="flex gap-4">
+    <MyButton>默认按钮</MyButton>
+    <MyButton variant="outline">边框按钮</MyButton>
+    <MyButton variant="ghost">幽灵按钮</MyButton>
+  </div>
+</template>
+
+<script setup>
+import MyButton from './ui/MyButton.vue';
+</script>`;
+---
+
+<Layout title="Vue 组件库 - Overthinker">
+  <div class="max-w-4xl mx-auto px-4 py-24 w-full">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4 flex items-center gap-3">
+        <span class="w-8 h-1 bg-primary-500 rounded-full"></span>
+        Vue 组件展示
+      </h1>
+      <p class="text-text-muted text-lg">
+        这里展示了我自己封装的 Vue 组件，类似 Element Plus 的展示方式。
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      <!-- Button Component -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 text-white">Button 按钮</h2>
+        <p class="text-text-muted mb-6">常用的操作按钮，支持多种变体和尺寸。</p>
+        
+        <ComponentShowcase title="基础用法" client:load>
+          <div slot="preview" class="flex flex-wrap gap-4">
+            <MyButton>默认按钮</MyButton>
+            <MyButton variant="outline">边框按钮</MyButton>
+            <MyButton variant="ghost">幽灵按钮</MyButton>
+            <MyButton variant="link">链接按钮</MyButton>
+          </div>
+          <div slot="code" class="p-4 bg-[#1e1e1e]">
+            <Code code={buttonCode} lang="vue" theme="vitesse-dark" />
+          </div>
+        </ComponentShowcase>
+      </section>
+    </div>
+  </div>
+</Layout>

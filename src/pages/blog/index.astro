@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="博客文章 - Overthinker">
+  <div class="max-w-4xl mx-auto px-4 py-24 w-full">
+    <h1 class="text-4xl font-bold mb-12 flex items-center gap-3">
+      <span class="w-8 h-1 bg-primary-500 rounded-full"></span>
+      所有文章
+    </h1>
+    
+    <div class="grid gap-6">
+      {posts.map((post) => (
+        <a href={`/blog/${post.id}`} class="group block p-6 rounded-2xl bg-bg-surface border border-transparent hover:border-primary-500/30 transition-all">
+          <div class="flex justify-between items-start mb-4">
+            <h2 class="text-2xl font-bold group-hover:text-primary-400 transition-colors">{post.data.title}</h2>
+            <span class="text-sm text-text-muted whitespace-nowrap ml-4">
+              {post.data.pubDate.toISOString().split('T')[0]}
+            </span>
+          </div>
+          <p class="text-text-muted mb-4 line-clamp-2">
+            {post.data.description}
+          </p>
+          {post.data.tags && (
+            <div class="flex gap-2">
+              {post.data.tags.map((tag: string) => (
+                <span class="text-xs px-2 py-1 bg-bg-surface-hover text-primary-300 rounded-md">#{tag}</span>
+              ))}
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>
